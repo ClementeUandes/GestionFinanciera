@@ -1,0 +1,90 @@
+---
+title: "Plantilla Proyecto"
+author: "Clemente Figueroa"
+format: html
+editor: visual
+---
+
+```{r configuraciones}
+#| message: false
+#| echo: false
+# Esto ya debiera estar cargado en el proyecto en posit.cloud
+# devtools::install_github("business-science/tidyquant")
+# Loads tidyquant, lubridate, xts, quantmod, TTR, and PerformanceAnalytics
+library(tidyverse)
+library(tidyquant)  
+```
+
+## Descripción Activo y Contexto (Hito 1)
+
+Fecha de entrega: Jueves 28 de Septiembre 23:59.
+
+### Definición
+
+La industria de la energía trata de la producción y venta de energía, un recurso indispensable para la vida en estos tiempos. A su vez, la industria de la energía está conformada por varios sectores y tipos de producción, como energía limpia y nuclear.
+
+En estos tiempos, la industria está haciendo énfasis en la creación de Ecosistemas de Energía, es decir, redes y métodos de producción en los cuales las tecnologías y fuentes de energía trabajen de manera inteligente e interconectada, dando paso a procesos integrales y mucho más eficientes.
+
+```{r ETL}
+#| echo: false
+# Alternativamente Use FANG data set
+# data("FANG") 
+end <- as_date("2022-12-31")
+# Get AAPL and AMZN Stock Prices
+# AAPL <- tq_get("AAPL", get = "stock.prices", from = "2015-09-01", to = end)
+# AMZN <- tq_get("AMZN", get = "stock.prices", from = "2000-01-01", to = end)
+CMPC <- tq_get("CMPC.SN", get = "stock.prices", from = "2000-01-01", to = end)
+VAPORES <- tq_get("VAPORES.SN", get = "stock.prices", from = "2000-01-01", to = end)
+CONCHATORO <- tq_get("CONCHATORO.SN", get = "stock.prices", from = "2000-01-01", to = end)
+CL <- rbind(CMPC,VAPORES,CONCHATORO)
+
+```
+
+```{r CMPCline}
+#| echo: false
+CMPC %>%
+    ggplot(aes(x = date, y = close)) +
+    geom_line() +
+    labs(title = "CMPC Line Chart", y = "Closing Price", x = "") + 
+    theme_tq() +
+  geom_hline(yintercept=mean(CMPC$close), linetype="dashed", color = "red")
+```
+
+```{r CMPCcandle}
+#| warning: false
+CMPC %>%
+    ggplot(aes(x = date, y = close)) +
+    geom_candlestick(aes(open = open, high = high, low = low, close = close)) +
+    labs(title = "AAPL Candlestick Chart", y = "Closing Price", x = "") +
+    theme_tq()
+```
+
+### Motivación
+
+Se decidió trabajar este sector dado que, hoy en día, la industria de la energía está tomando demasiado peso, más aún desde el punto de vista de las energías renovables.
+
+### Contexto
+
+El activo elegido es la empresa Enel Chile S.A., la cual, actualmente cuenta con una capacidad instalada neta al 31 de diciembre de 2022 de 8.408 MW de generación a lo largo de todo el país y distribuyen energía a más de 2 millones de clientes en la Región Metropolitana. También, la forma más común y tradicional para invertir es mediante la compra de acciones, donde es necesario tener la data disponible para poder estar informado, teniendo el cuenta el retorno histórico y actual, riesgos, entre otros. Es importante tener en consideración que estas variables pueden ser macro como microeconómicas.
+
+::: columns
+![](Captura%20de%20pantalla%202023-09-28%20235149.png)
+:::
+
+![](Imagen1.png){fig-align="center"}
+
+### Análisis de Largo Plazo
+
+#### Caracterización deuda (Aplicación cap. 15)
+
+Podemos ver según el resumen del instrumento que el valor de este hoy en día, está en un valor de 53.90, con una variación de -0.22%, donde en el último año hasta la fecha se compró un monto de 771.705.744, donde el precio mayor de la acción fue de 64.00 y el precio menor fue de 34.81, donde la relación utilidad/precio es de 34.84.
+
+La rentabilidad del instrumento en cuestión mensual es de -6.18%, y anual es de 54.98%, lo que nos deja con sensaciones separadas, pensando en que mensualmente la rentabilidad del activo es baja, pero, si analizamos a mediano plazo tenemos una rentabilidad muy alta.
+
+#### Caracterización de emisiones históricas (Aplicación cap. 20)
+
+#### Relación con activos derivados
+
+### Reporte grupal
+
+Definicion de un balance de portafolio sobre los 3 activos del grupo, donde se especifique los pesos de cada activo de tal forma que maximize el retorno de la cartera.
