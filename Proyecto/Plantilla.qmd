@@ -88,3 +88,23 @@ La rentabilidad del instrumento en cuestión mensual es de -6.18%, y anual es de
 ### Reporte grupal
 
 Definicion de un balance de portafolio sobre los 3 activos del grupo, donde se especifique los pesos de cada activo de tal forma que maximize el retorno de la cartera.
+
+# **Detalle Hito 2:**
+
+Para la realización de este hito, se tuvo que armar un google colab, en el cual, se programó 2 modelos diferentes de valoración de una opción de compra (PULL), donde el primero que se utilizó fue el modelo de Black-Scholes, donde se realizó el siguiente procedimiento:
+
+![](Modelo Continuo Black-Scholes.png)
+
+El cual nos entrega los resultados de la valoración de la opción de compra de un activo con este tipo de modelo.
+
+Es de suma importancia aclarar que los resultados datos que se utilizaron del activo en cuestión, fueron obtenidos desde una nube API de la Bolsa de Santiago desde python.
+
+Finalmente, con este mismo procedimiento, se calculó nuevamente la opción de compra de un activo, solo que esta vez se utilizó otro tipo de modelo, el cual se obtuvo desde un documento de URL:
+
+chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://rua.ua.es/dspace/bitstream/10045/16066/14/Tema%207%20Valoracion.pdf
+
+En el cual, se pudo ver la forma de aplicar este método, el cual, se aplicó en python de la siguiente forma:
+
+![](Modelo Binomial de valoracion.png){width="677"}
+
+Con esto se puede decir que se cumplió con los objetivos de esta entrega, en la cual, no se puede decir que con un 100% de certeza.
