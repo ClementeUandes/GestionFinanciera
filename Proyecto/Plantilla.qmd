@@ -93,7 +93,7 @@ Definicion de un balance de portafolio sobre los 3 activos del grupo, donde se e
 
 Para la realización de este hito, se tuvo que armar un google colab, en el cual, se programó 2 modelos diferentes de valoración de una opción de compra (PULL), donde el primero que se utilizó fue el modelo de Black-Scholes, donde se realizó el siguiente procedimiento:
 
-![](Modelo Continuo Black-Scholes.png)
+![](Modelo%20Continuo%20Black-Scholes.png)
 
 El cual nos entrega los resultados de la valoración de la opción de compra de un activo con este tipo de modelo.
 
@@ -105,6 +105,28 @@ chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://rua.ua.es/dspace/bit
 
 En el cual, se pudo ver la forma de aplicar este método, el cual, se aplicó en python de la siguiente forma:
 
-![](Modelo Binomial de valoracion.png){width="677"}
+![](Modelo%20Binomial%20de%20valoracion.png){width="677"}
 
 Con esto se puede decir que se cumplió con los objetivos de esta entrega, en la cual, no se puede decir que con un 100% de certeza.
+
+Caso Grupal
+
+Además, se tuvo que realizar una entrega grupal, en la cual, se realizó el estudio de uno de los casos propuestos, el cual se respondieron las preguntas de Richmond Corporation de la página 845 del ROSS, donde se presentan a continuación las siguientes imágenes con las respuestas a las preguntas:
+
+1.- ¿Cuál es el flujo de efectivo neto total de Richmond Corporation que genera el actual sistema de apartados postales y con el que se paga la nómina?
+
+![](Pregunta 1 Caso Richmond.png)
+
+En esta imagen podemos ver cuál sería el flujo de efectivo neto total de Richmond Corporation.
+
+2.- De acuerdo con los términos propuestos por Third National Bank, ¿la compañía debe adoptar el sistema de banco concentrador?
+
+![](Pregunta 2 Caso Richmond.png)
+
+Para este caso podemos decir que el banco aceptará las tranferenchas ACH de los cuatro bancos diferentes, por lo que, podemos ver en la imagen anterior el valor de ACH.
+
+3.- ¿Qué costo de las transferencias por ACH haría que resultara indiferente para la empresa elegir cualquiera de los dos sistemas? Apéndice 27A Determinación del saldo de efectivo deseable. Apéndice 27B Acciones preferentes de tasa ajustable, acciones preferentes de tasa de subasta y certificados de depósito de tasa variable. Puede consultar el apéndice de este capítulo en el centro de recursos en línea de este libro.
+
+![](Pregunta 3 Caso Richmonds.png)
+
+Con esto podemos decir que se respondió satisfactoriamente las preguntas del caso de Richmond Corporation de la página 845 del ROSS.
