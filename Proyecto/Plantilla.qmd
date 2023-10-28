@@ -109,24 +109,60 @@ En el cual, se pudo ver la forma de aplicar este método, el cual, se aplicó en
 
 Con esto se puede decir que se cumplió con los objetivos de esta entrega, en la cual, no se puede decir que con un 100% de certeza.
 
-Caso Grupal
+**Análisis de caso Grupal**
 
-Además, se tuvo que realizar una entrega grupal, en la cual, se realizó el estudio de uno de los casos propuestos, el cual se respondieron las preguntas de Richmond Corporation de la página 845 del ROSS, donde se presentan a continuación las siguientes imágenes con las respuestas a las preguntas:
+##### ADMINISTRACIÓN DE EFECTIVO EN RICHMOND CORPORATION
 
-1.- ¿Cuál es el flujo de efectivo neto total de Richmond Corporation que genera el actual sistema de apartados postales y con el que se paga la nómina?
+*Richmond Corporation fue fundada hace 20 años por su presidente, Daniel Richmond. En sus comienzos, la compañía realizaba ventas por correo, pero en los últimos años ha crecido con rapidez, en buena medida debido a su sitio web. En virtud de la gran dispersión geográfica de los clientes, en la actualidad, la firma emplea un sistema de cajas de correo con centros de cobranza en San Francisco, Saint Louis, Atlanta y Boston.*
 
-![](Pregunta 1 Caso Richmond.png)
+*Steve Dennis, tesorero de la compañía, ha examinado las políticas vigentes de cobranza de efectivo.En promedio, cada centro de cajas de correo maneja 235 000 dólares de pagos cada día. La política actual de la empresa es invertir estos pagos en títulos negociables a corto plazo en los bancos que manejan los centros de cobranza. Cada dos semanas se vacían las cuentas de inversión y los saldos se transfieren por medios electrónicos a las oficinas centrales de Richmond, en Dallas, para pagar la nómina de la empresa. Las cuentas de inversión pagan cada una .068% al día y las transferencias electrónicas cuestan .20% del monto transferido.*
 
-En esta imagen podemos ver cuál sería el flujo de efectivo neto total de Richmond Corporation.
+*Steve ha entablado conversaciones con el Third National Bank, situado en las afueras de Dallas, para estudiar la posibilidad de establecer un sistema de banco concentrador para la empresa. Third National aceptará los pagos diarios de los centros de cajas de correo por medio de transferencias de cámara de compensación automatizada (ACH, del inglés automated clearinghouse) en lugar de transferencias electrónicas. Los fondos que transfiera ACH no estarán disponibles para uso durante un día. Una vez compensados, los fondos se depositarán en una cuenta de inversión a corto plazo, que ofrece un rendimiento de .075% al día. Cada transferencia por ACH costará 200 dólares. Daniel ha pedido a Steve que determine cuál es el mejor sistema de administración de efectivo para la compañía.*
 
-2.- De acuerdo con los términos propuestos por Third National Bank, ¿la compañía debe adoptar el sistema de banco concentrador?
+1.  *¿Cuál es el flujo de efectivo neto total de Richmond Corporation que genera el actual sistema de cajas de correo y con el que se paga la nómina?*
 
-![](Pregunta 2 Caso Richmond.png)
+    Para resolver este problema, se debe tener en cuenta la siguiente información.
 
-Para este caso podemos decir que el banco aceptará las tranferenchas ACH de los cuatro bancos diferentes, por lo que, podemos ver en la imagen anterior el valor de ACH.
+    El activo de la cartera a elegir es el del sector inmobiliario, Parque Arauco S.A. Para el rendimiento de las inversiones, se utilizó la infomración diaria de los retornos del mes de octubre. Además, se consideran 12 centros, que son los que se encuentran en Chile. El resto de los datos se mantuvieron como los del problema.
 
-3.- ¿Qué costo de las transferencias por ACH haría que resultara indiferente para la empresa elegir cualquiera de los dos sistemas? Apéndice 27A Determinación del saldo de efectivo deseable. Apéndice 27B Acciones preferentes de tasa ajustable, acciones preferentes de tasa de subasta y certificados de depósito de tasa variable. Puede consultar el apéndice de este capítulo en el centro de recursos en línea de este libro.
+    |                                      |         |          |
+    |--------------------------------------|---------|----------|
+    | Centros                              | 12      | unidades |
+    | Pagos                                | 185.000 | USD      |
+    | Tranferencia de saldos               | 14      | días     |
+    | Cuentas de inversión                 | 0,07    | \%       |
+    | Costo tranferecnias electrónicas     | 0,20    | \%       |
+    | Rendimiento (en cuenta de inversión) | -2,4%   | \%       |
+    | Costo tranferencia por ACH           | 200     | USD      |
 
-![](Pregunta 3 Caso Richmonds.png)
+Para obtener el flujo de efectivo neto total, se realiza la siguiente fórmula.
 
-Con esto podemos decir que se respondió satisfactoriamente las preguntas del caso de Richmond Corporation de la página 845 del ROSS.
+![](file_show.png){width="501"}
+
+Para calcular el valor futuro se resuelve la siguiente fórmula.
+
+![](file_show%20(1).png){width="147"}
+
+Finalmente reemplazando, se obtiene que el flujo de efectivo que se genera con el flujo de caja descrito en el enunciado y con el que se paga finalmente la nómina es de \$31.155.312 USD.
+
+2.  *De acuerdo con los términos propuestos por Third National Bank, ¿la compañía debe adoptar el sistema de banco concentrador?*
+
+El banco aceptará las transferencias ACH de los cuatro bancos diferentes, por lo que la compañía incurre en una tarifa de transferencia de cada centro de recolección. Es por eso que ahora se deberá descontar el valor de la transferencia ACH a los pagos de 185mil USD de cada día. Además, todo será dividido por (1+ tasa de rendimiento).
+
+El valor futuro de los depósitos ahora será:
+
+Vf = \[- Centros\*Valor futuro\] / \[1 + Tasa de rendimiento\]
+
+Reemplazando los valores, se obtiene que finalmente el valor de ACH será de \$27.293.900 USD. Como se puede observar, este valor es menor al obtenido en la pregunta anterior, por lo tanto la compañía no debería adoptar el sistema del banco concentrador.
+
+3.  *¿Qué costo de las transferencias por ACH haría que resultara indiferente para la empresa elegir cualquiera de los dos sistemas?*
+
+Para este caso, debemos depsejar el Valor futuro de la siguiente ecuación.
+
+![](file_show%20(2).png){width="245"}
+
+Como se mostró en la pregunta anterior, al valor futuro se le descontó las transferencias de ACH. En este caso, la variable a encontrar X es este valor por transferencia. La ecuación quedaría como en la siguiente imagen.
+
+![](file_show%20(3).png){width="331"}
+
+Finalmente, utilizando el solver de excel se obtuvo que el costo de transferencia es de \$30.407.986 USD. Esto nos indica que con este costo la empresa estaría indiferente en elegir entre ambos sistemas.
