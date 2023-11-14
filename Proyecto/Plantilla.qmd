@@ -12,7 +12,7 @@ editor: visual
 # devtools::install_github("business-science/tidyquant")
 # Loads tidyquant, lubridate, xts, quantmod, TTR, and PerformanceAnalytics
 library(tidyverse)
-library(tidyquant)  
+library(tidyquant)
 ```
 
 ## Descripción Activo y Contexto (Hito 1)
@@ -21,9 +21,11 @@ Fecha de entrega: Jueves 28 de Septiembre 23:59.
 
 ### Definición
 
-La industria de la energía trata de la producción y venta de energía, un recurso indispensable para la vida en estos tiempos. A su vez, la industria de la energía está conformada por varios sectores y tipos de producción, como energía limpia y nuclear.
+En el siguiente informe, se detallará y profundizará en el análisis de un activo perteneciente al sector energético, focalizándonos en particular en el activo de Enel Chile S.A. La industria de la energía reviste una importancia crucial en la sociedad actual, ya que se encarga de la generación y comercialización de un recurso fundamental para la vida moderna: la energía. Este recurso es esencial para el funcionamiento de numerosos aspectos de la vida cotidiana, desde el abastecimiento de hogares hasta el soporte de diversas actividades industriales y comerciales. Cabe destacar que la industria de la energía no es homogénea y se compone de diversos sectores y modalidades de producción. Entre ellos, se destacan la energía limpia, que busca minimizar el impacto ambiental a través de fuentes renovables, y la energía nuclear, que utiliza procesos nucleares para la generación de electricidad. Ambas modalidades representan enfoques diferentes pero igualmente relevantes para satisfacer la creciente demanda energética de la sociedad.
 
-En estos tiempos, la industria está haciendo énfasis en la creación de Ecosistemas de Energía, es decir, redes y métodos de producción en los cuales las tecnologías y fuentes de energía trabajen de manera inteligente e interconectada, dando paso a procesos integrales y mucho más eficientes.
+En la actualidad, la industria está experimentando un cambio significativo con un enfoque destacado en el desarrollo de Ecosistemas de Energía. Estos ecosistemas se caracterizan por la interconexión y la inteligencia integrada de tecnologías y fuentes de energía, dando lugar a procesos holísticos y considerablemente más eficientes. Este paradigma busca trascender las estructuras tradicionales de producción y distribución de energía, fomentando una colaboración sinérgica entre diversas tecnologías y sistemas para optimizar la generación, distribución y consumo de energía. La creación de Ecosistemas de Energía implica una integración estratégica de fuentes de energía renovable, almacenamiento avanzado, redes inteligentes y tecnologías de gestión de datos. Esta sinergia facilita la adaptabilidad y la respuesta a las variaciones en la demanda, así como la maximización de la eficiencia energética en todos los niveles del sistema.
+
+Como se mencionó, el estudio de este informe se centrará, principalmente, en Enel Chile S.A., la cual se enfoca en el mercado energético chileno, participando en la generación y distribución de energía eléctrica. La compañía ha estado involucrada en proyectos de energía renovable, como la solar y la eólica, tomando una línea con las tendencias globales hacia la sostenibilidad y la reducción de emiciones.
 
 ```{r ETL}
 #| echo: false
@@ -33,61 +35,114 @@ end <- as_date("2022-12-31")
 # Get AAPL and AMZN Stock Prices
 # AAPL <- tq_get("AAPL", get = "stock.prices", from = "2015-09-01", to = end)
 # AMZN <- tq_get("AMZN", get = "stock.prices", from = "2000-01-01", to = end)
-CMPC <- tq_get("CMPC.SN", get = "stock.prices", from = "2000-01-01", to = end)
-VAPORES <- tq_get("VAPORES.SN", get = "stock.prices", from = "2000-01-01", to = end)
+ENELCHILE <- tq_get("ENELCHILE.SN", get = "stock.prices", from = "2000-01-01", to = end)
+VAPORES <- tq_get("VAPORES.SN", get = "stock.prices", from = "2016-04-18", to = end)
 CONCHATORO <- tq_get("CONCHATORO.SN", get = "stock.prices", from = "2000-01-01", to = end)
-CL <- rbind(CMPC,VAPORES,CONCHATORO)
-
+CL <- rbind(ENELCHILE,VAPORES,CONCHATORO)
 ```
 
-```{r CMPCline}
+El activo ENELCHILE tiene un valor promedio para el intervalo igual a `r round(mean(ENELCHILE$close),digits=0)`
+
+```{r ENELCHILEline}
 #| echo: false
-CMPC %>%
+ENELCHILE %>%
     ggplot(aes(x = date, y = close)) +
     geom_line() +
-    labs(title = "CMPC Line Chart", y = "Closing Price", x = "") + 
+    labs(title = "ENELCHILE Line Chart", y = "Closing Price", x = "") + 
     theme_tq() +
-  geom_hline(yintercept=mean(CMPC$close), linetype="dashed", color = "red")
+  geom_hline(yintercept=mean(ENELCHILE$close), linetype="dashed", color = "red")
 ```
 
-```{r CMPCcandle}
+```{r ENELCHILEcandle}
 #| warning: false
-CMPC %>%
+ENELCHILE %>%
     ggplot(aes(x = date, y = close)) +
     geom_candlestick(aes(open = open, high = high, low = low, close = close)) +
-    labs(title = "AAPL Candlestick Chart", y = "Closing Price", x = "") +
+    labs(title = "ENELCHILE Candlestick Chart", y = "Closing Price", x = "") +
     theme_tq()
 ```
 
 ### Motivación
 
-Se decidió trabajar este sector dado que, hoy en día, la industria de la energía está tomando demasiado peso, más aún desde el punto de vista de las energías renovables.
+La elección de enfocarme en este sector se fundamente en la creciente relevancia que ha adquirido la industria de la energía en la actualidad. Esta decición se sustenta en el reconocimiento de que la transición hacia fuentes de energía más sostenibles no solo es una tendencia emergente, sino también una necesidad en el contexto de la creciente conciencia ambiental y los desafíos asociados al cambio climático.
+
+El escenario de las energías renovables se ha convertido en protagonista, impulsando una transformación significativa en la forme en que producimos y consumimos energía, lo que este enfoque no solo responde a las demandas del mercado, sino que también refleja un compromiso con la responsabilidad ambiental.
 
 ### Contexto
 
-El activo elegido es la empresa Enel Chile S.A., la cual, actualmente cuenta con una capacidad instalada neta al 31 de diciembre de 2022 de 8.408 MW de generación a lo largo de todo el país y distribuyen energía a más de 2 millones de clientes en la Región Metropolitana. También, la forma más común y tradicional para invertir es mediante la compra de acciones, donde es necesario tener la data disponible para poder estar informado, teniendo el cuenta el retorno histórico y actual, riesgos, entre otros. Es importante tener en consideración que estas variables pueden ser macro como microeconómicas.
+El activo seleccionado para este análisis es la empresa Enel Chile S.A. Al cierre del ejercicio fiscal, el 31 de diciembre de 2022, la compañía exhibe una capacidad instalada neta de 8.408 MW para la generación de energía que abarca todo el territorio nacional. Además, destaca por su alcance significativo al distribuir energía a más de 2 millones de clientes en la Región Metropolitana.
 
-::: columns
-![](Captura%20de%20pantalla%202023-09-28%20235149.png)
-:::
+En ámbito de inversión, la adquisición de acciones emerge como la modalidad más común y tradicional. En este sentido, resulta escencial contar con datos actualizados para una toma de deciciones informada, considerando aspectos como el rendimiento histórico y actual, así como los riegos asociados.
 
-![](Imagen1.png){fig-align="center"}
+![](Enel.png)
+
+Gráfico 1: Valor cuota acción Enel Chile S.A.
+
+Del gráfico presentado, se observa que el valor cuota por acción a día de hoy corresponde a CLP 54,00 y que la rentabilidad tiene una tendencia de subida. También, se pudo observar en el gráfico que en los 8 meses presentados en el gráfico, el valor más bajo fue inferior a los CLP 40,00 correspondiente al mes de abril, lo que nos mantiene lo dicho anteriormente con respecto a la tendencia de subida del precio.
+
+De misma manera, un dato y factor muy importante para el precio de la cuota es cuando se habla de la clasificacion de la solvencia y líneas de bonos del activo en cuestión, donde, el 3 de julio del presente año, Feller Rate, una empresa chilena de servicios financieros, ratificó en "AA" la clasificación de Enel Chile S.A. asignada a la solvencia y las líneas de bonos, la cual, responde a una perfil de negocios "Satisfactorio" y una posición financiera "Sólida". Además, Feller Rate habla sobre Enel Chile S.A. diciendo que concentra todos los activos de generación, distribución y transmisión de energía en Chile del grupo Enel, a través del 93,5% y 100% de la propiedad de Enel Generación Chile S.A. ("AA/Estables" por Feller Rate) y de enel Green Power Chile S.A. (EGPC), y del 99,1% en Enel Distribución Chile S.A.
+
+También, al momento de hablar de la exposición al riesgo del activo en cuestión, es de suma importancia hablar sobre la dependencia que enfrentan las compañías eléctricas del marco tarifario en que se desenvuelven, lo que hace que sea un factor clave en la evolución de su comportamiento a futuro, donde la metodología tarifaria no ha presentado variaciones relevantos, mantieniendo una estabilidad favorable.
+
+Además, el 21/12/2019 se publicó una Ley Corta de Destribución que rebaja la rentabilidad de las empresas de distribución, entre otras medidas. Se modifica la tasa de actualización para el cálculo de los costos anuales, calculada por la CNE cada cuatro años, a 6% real después del impuesto.
 
 ### Análisis de Largo Plazo
 
 #### Caracterización deuda (Aplicación cap. 15)
 
-Podemos ver según el resumen del instrumento que el valor de este hoy en día, está en un valor de 53.90, con una variación de -0.22%, donde en el último año hasta la fecha se compró un monto de 771.705.744, donde el precio mayor de la acción fue de 64.00 y el precio menor fue de 34.81, donde la relación utilidad/precio es de 34.84.
+En relación con la empresa Enel Chile S.A., se dispone de un informe exhaustivo que detalla el estado de situación financiera consolidado al 31 de diciembre de 2022. Este informe proporciona una visión integral del desempeño económico de la empresa, desglosando su estado de resultados y presentando de manera transparente la composición de sus activos, pasivos y patrimonio.
 
-La rentabilidad del instrumento en cuestión mensual es de -6.18%, y anual es de 54.98%, lo que nos deja con sensaciones separadas, pensando en que mensualmente la rentabilidad del activo es baja, pero, si analizamos a mediano plazo tenemos una rentabilidad muy alta.
+A continuación, se adjunta una imagen que ilustra la información previamente discutida en relación con los activos de la empresa:
 
-#### Caracterización de emisiones históricas (Aplicación cap. 20)
+![](Estados financieros Enel (Activos).png){width="738"}
+
+De la imagen anterior, podemos obeservar que el total de los activos es de alrededor de CLP 11.500.000.000, donde la mayor parte de los activos se centran en los activos no corrientes, ttales como propiedades, planta y equipo, propiedad de inversión, entre otros.
+
+Por otro lado, a continuación, se presenta una imagen detallada a cerca de los pasivos y el patrimonio de la empresa:
+
+![](Estados financieros Enel.png)
+
+De la imagen anterior, se puede observar que el total de los pasivos es alrededor de los CLP 7.000.000.000, donde la mayor parte de los pasvisos se centran en pasivos no corrientes, pasivos corrientes totales, entre otras. Luego, también se puede observar el total del patrimonio, siendo este cercano a los CLP 4.500.000.000, donde la mayor parte se encuentra en el patrimonio atribuible a los propietarios de la controladora.
+
+#### Caracterización de emisiones históricas
+
+En una junta extraordinaria de accionitas de Enel Chile S.A. celebrada el 20 de diciembre de 2017, cuya acta se redujo a escritura pública, se presentó la emisión de acciones de pago, en donde se dictó paso a paso la oferta pública, donde en ella podemos ver los pasos del proceso de recaudación de capital:
+
+1.  Se comprueba la conferencia previa a la suscripción, ya que se habla de una junta de accionistas, donde, en esa fecha se acordó, entre otras materias aumentar el capital de la sociedad en la suma de \$820.000.000.000, mediante la emisión de 10.000.000.000 acciones de pago ordinarias, nominativas, todas de una misma serie y sin valor nominal.
+2.  Luego, se puede ver que el 28 de diciembre, en la Notaría de Santiago de don Iván Torrealba Acevedo, se presenta y aprueba las declaraciones de registro.
+3.  Más adelante, podemos observar la fijación del precio de las emisiones, acordando que serán ofrecidas al precio de \$82 por acción, y que estas deberán ser pagadas al contado y en dinero efectivo, vale vista bancario, transferencia electrónica de fondos o cualquier otro instrumento o efecto representativo de dinero y pagadero a la vista.
+4.  La oferta pública de esta emisión de acciones de pago se presentó mediante un aviso que comunicó qué accionistas tienen derecho a suscribir preferentemente las acciones del aumento de capital en el diario El Mercurio de Santiago el día 9 de febrero de 2018.
+5.  En el comunicado no se puede ver este último paso de estabilización del mercado, en el cual el suscriptor se perpara para colocar pedidos de compra a un precio específico en el mercado.
+
+El documento del cual se habla, se encuentra en el siguiente link:
+
+<chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://www.enel.cl/content/dam/enel-cl/inversionistas/enel-generacion-chile/proyectos/proyecto-elqui/documentos-de-interes-proyecto-elqui/EnelChile-EmisionDeAccionesDePago.pdf>
 
 #### Relación con activos derivados
 
+Observando y analizando el Informe de estados financieros de Enel Chile del año 2023, podemos ver que en el punto g.1 de la página 31, que el grupo clasifica sus activos financieros no derivados, ya sean permanentes o temporales, excluidas las inversiones contabilizadas por el método de participación y los activos no corrientes mantenidos para la venta en tres categorías:
+
+1.  Costo amortizado.
+2.  Activos financieros registrados a valor razonable con cambios en otros resultados integrales.
+3.  Activos financieros registrados a valor razonable con cambios en resultados.
+
 ### Reporte grupal
 
-Definicion de un balance de portafolio sobre los 3 activos del grupo, donde se especifique los pesos de cada activo de tal forma que maximize el retorno de la cartera.
+Los tres activos que se utilizaron para poder crear el portafolio y maximizar el retorno de la cartera son, Banco de Chile, Enel y Parque Arauco. Para obtener este portafolio se utilizaron los precios históricos del último año de cada uno de estas empresas y fueron obtenidos desde Yahoo Finance. La rentabilidad mensual promedio del último año para cada uno de los activos fue:
+
+| Activo         | Retorno Promedio Mensual |
+|----------------|--------------------------|
+| Banco de Chile | 1,72%                    |
+| Enel           | 4,59%                    |
+| Parque Arauco  | 4,28%                    |
+
+Para plantear el problema de optimización se calculó la matriz de varianza-covarianza de los retornos mensuales de estos activos y se utilizó los BCP de 10 años como tasa libre de riesgo. Se resolvió el problema en Solver de excel y la cartera que entregaba el mayor ratio de Sharpe es:
+
+| Chile  | Enel   | P.Arauco | Riesgo | Retorno | Rf    | Sharpe Ratio |
+|--------|--------|----------|--------|---------|-------|--------------|
+| 23,18% | 26,90% | 49,92%   | 6,64%  | 3,77%   | 0,48% | 49,51%       |
+
+Por lo tanto, utilizando esos pesos se maximiza el ratio de sharpe y es la cartera o portafolio óptimo.
 
 # **Detalle Hito 2:**
 
@@ -101,13 +156,29 @@ Es de suma importancia aclarar que los resultados datos que se utilizaron del ac
 
 Finalmente, con este mismo procedimiento, se calculó nuevamente la opción de compra de un activo, solo que esta vez se utilizó otro tipo de modelo, el cual se obtuvo desde un documento de URL:
 
-chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://rua.ua.es/dspace/bitstream/10045/16066/14/Tema%207%20Valoracion.pdf
+<https://oikonomicon.udc.es/el_modelo_binomial.html>
 
-En el cual, se pudo ver la forma de aplicar este método, el cual, se aplicó en python de la siguiente forma:
+### Modelo Binomial 
+
+El modelo binomial (propuesto por Cox, ross y Rubinstein) se basa en la posibilidad de formar una cobertura combinando una posición larga en acciones con una call vendida sobre ellas. Que esta combinación sea sin riesgo significa que se deben verificar dos condiciones: en primer lugar, los flujos de caja en t=1 deben ser los mismos, ocurra lo que ocurra con el precio del subyacente; en segundo lugar, el flujo de caja en t=1 debe ser financieramente equivalente al flujo de caja en t=0, a la tasa sin riesgo.
+
+Cox, Ross y Rubinstein proponen abordar el problema mediante una estrategia de simulación en la que el precio del subyacente puede sufrir solo uno de los dos siguientes cambios: aumentar en una tasa x, o reducirse en una tasa y.
+
+![](Modelo Binomial.png){width="409"}
+
+Partiendo de ello, y de la ratio de cobertura (el número de acciones a adquirir para formar la posición larga) se obtiene una expresión que permite calcular el valor actual de la opción en función del valor esperado del instrumento en t = 1 si el subyacente aumenta de precio (cu) y del valor en caso de que el subyacente se deprecie (cd):
+
+![](Modelo Binomial 1.png){width="328"}
+
+donde p y (1-p) son dos probabilidades riesgo-neutrales, i es la tasa sin riesgo, u = 1/x (x es el aumento medio de S por período) y d = 1-y (y es la tasa media a la que se reduce S por período).
+
+Se pudo ver la forma de aplicar este método, el cual, se aplicó en python de la siguiente forma:
 
 ![](Modelo%20Binomial%20de%20valoracion.png){width="677"}
 
-Con esto se puede decir que se cumplió con los objetivos de esta entrega, en la cual, no se puede decir que con un 100% de certeza.
+Al concluir el análisis, es evidente que los modelos utilizados ofrecen resultados divergentes. El modelo Continuo Black-Scholes presenta una singularidad en sus resultados, proporcionando una valorización única. En contraste, el modelo Binomial arroja resultados a lo largo de distintos periodos, aplicando rigurosamente los mismos parámetros en relación al activo de Enel Chile S.A. Esta disparidad nos plantea interrogantes, siendo la más destacada: ¿Cuál de estos modelos se ajusta de manera más precisa y confiable, brindándonos datos más certeros en cuanto a la valorización del activo en cuestión?
+
+Esta incertidumbre nos insta a explorar a fondo las particularidades de cada modelo y considerar los fundamentos teóricos en los que se basan.
 
 **Análisis de caso Grupal**
 
@@ -132,7 +203,7 @@ Con esto se puede decir que se cumplió con los objetivos de esta entrega, en la
     | Tranferencia de saldos               | 14      | días     |
     | Cuentas de inversión                 | 0,07    | \%       |
     | Costo tranferecnias electrónicas     | 0,20    | \%       |
-    | Rendimiento (en cuenta de inversión) | -2,4%   | \%       |
+    | Rendimiento (en cuenta de inversión) | -2,4    | \%       |
     | Costo tranferencia por ACH           | 200     | USD      |
 
 Para obtener el flujo de efectivo neto total, se realiza la siguiente fórmula.
@@ -166,3 +237,15 @@ Como se mostró en la pregunta anterior, al valor futuro se le descontó las tra
 ![](file_show%20(3).png){width="331"}
 
 Finalmente, utilizando el solver de excel se obtuvo que el costo de transferencia es de \$30.407.986 USD. Esto nos indica que con este costo la empresa estaría indiferente en elegir entre ambos sistemas.
+
+### Bibliografía
+
+Rate, F. (3 de Julio de 2023). *Feller-rate.com*. Obtenido de <https://www.feller-rate.com/clasificacion-cp/11020/16229/enel-chile-sa#:~:text=La%20clasificaci%C3%B3n%20%E2%80%9CAA%E2%80%9D%20asignada%20a,y%20una%20posici%C3%B3n%20financiera%20%E2%80%9CS%C3%B3lida.>
+
+Rate, F. (Julio de 2019). *Informe de clásificación.* Obtenido de <chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://www.cmfchile.cl/documentos/pueag/crcri/recri_2019070113911.pdf>
+
+Investing. (12 de 11 de 2023). *es.investing.com*. Obtenido de <https://es.investing.com/equities/enersis-chile-sa-financial-summary>
+
+Finance, Y. (12 de 11 de 2023). *finance.yahoo.com*. Obtenido de <https://finance.yahoo.com/quote/ENELCHILE.SN?p=ENELCHILE.SN>
+
+S.A., E. C. (Julio de 2023). *Enel Chile.* Obtenido de <chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://www.enel.cl/content/dam/enel-cl/inversionistas/enel-chile/informacion-para-el-accionista/resultados-trimestrales/estados-financieros/2023/EEFF-Enel-Chile-junio-2023.pdf>
